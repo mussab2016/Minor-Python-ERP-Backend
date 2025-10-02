@@ -27,12 +27,13 @@ def random_date(start_year=2020, end_year=2025):
 # -----------------------------
 cursor.execute("DELETE FROM users")
 cursor.execute(
-    "INSERT INTO users (name, username, password, rank) VALUES ('Manager', 'Manager', '123456789', '')"
+    "INSERT INTO users (name, username, password, rank) VALUES (?, ?, ?, ?)",
+    ("Manager", "Manager", hash_password("123456789"), 3)
 )
 for i in range(1, 50):
     name = random.choice(first_names) + " " + random.choice(last_names)
     username = f"user{i}"
-    password = hash_password("password")
+    password = hash_password(random.choice(first_names))
     rank = random.randint(1, 3)
     cursor.execute(
         "INSERT INTO users (name, username, password, rank) VALUES (?, ?, ?, ?)",
